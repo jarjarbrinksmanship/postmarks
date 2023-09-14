@@ -37,19 +37,6 @@ app.disable("x-powered-by");
 //force HTTPS in production
 if (process.env.ENVIRONMENT === "production") {
   app.set("trust proxy", ["127.0.0.1", "10.0.0.0/8"]);
-
-  app.use(({ secure, hostname, url, port }, response, next) => {
-    if (!secure) {
-      return response.redirect(
-        308,
-        `https://${hostname}${url}${port ? `:${port}` : ""}`
-      );
-    }
-
-    next();
-  });
-} else {
-  console.log("ENVIRONMENT is not 'production', HTTPS not forced");
 }
 
 const hbs = create({
